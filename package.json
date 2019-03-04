@@ -1,0 +1,30 @@
+{
+  "name": "rotate-pointer-devices",
+  "version": "1.0.0",
+  "description": "Rotate the orientation of your pointer devices",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "rotate-pointer-device-orientation": "./index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jfr3000/rotate-pointer-device-orientation.git"
+  },
+  "keywords": [
+    "rotate",
+    "pointer",
+    "input",
+    "devices",
+    "touchscreen",
+    "mouse"
+  ],
+  "author": "Julia Friesel",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jfr3000/rotate-pointer-device-orientation/issues"
+  },
+  "homepage": "https://github.com/jfr3000/rotate-pointer-device-orientation#readme"
+}
