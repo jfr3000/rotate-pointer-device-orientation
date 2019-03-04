@@ -1,30 +1,27 @@
-#!/usr/bin/env node
 'use strict'
-const direction = process.argv[2]
+const exec = require('child_process').exec
 
-if (!['left', 'right', 'normal'].includes(direction)) throw new Error('Direction must be one <left, right, normal>')
+module.exports = (direction, cb) => {
+  const coordinateMatrices = {
+    left: "0 -1 1 1 0 0 0 0 1",
+    right: "0 1 0 -1 0 1 0 0 1",
+    normal: "0 0 0 0 0 0 0 0 0"
+  }
 
-var exec = require('child_process').exec
+  exec('xinput', (err, stdout) => {
+    if (err) cb(err)
+    const lines = stdout.split('\n')
+    const pointerLines = lines.filter(line => line.includes('slave  pointer'))
+    const deviceNames = pointerLines.map(line => {
+      const nameSection = line.split('\t')[0]
+      const name  = nameSection.slice(nameSection.indexOf('↳') + 1)
+      return name.trim()
+    })
 
-const coordinateMatrices = {
-  left: "0 -1 1 1 0 0 0 0 1",
-  right: "0 1 0 -1 0 1 0 0 1",
-  normal: "0 0 0 0 0 0 0 0 0"
-}
+    const script = deviceNames.map(deviceName => {
+      return `xinput set-prop "${deviceName}" --type=float "Coordinate Transformation Matrix" ${coordinateMatrices[direction]}`
+    }).join('\n')
 
-exec('xinput', (err, stdout) => {
-  if (err) throw err
-  const lines = stdout.split('\n')
-  const pointerLines = lines.filter(line => line.includes('slave  pointer'))
-  const deviceNames = pointerLines.map(line => {
-    const nameSection = line.split('\t')[0]
-    const name  = nameSection.slice(nameSection.indexOf('↳') + 1)
-    return name.trim()
+    cb(null, script)
   })
-
-  const script = deviceNames.map(deviceName => {
-    return `xinput set-prop "${deviceName}" --type=float "Coordinate Transformation Matrix" ${coordinateMatrices[direction]}`
-  }).join('\n')
-
-  process.stdout.write(script)
-})
+}

@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
-    "rotate-pointer-device-orientation": "./index.js"
+    "rotate-pointer-device-orientation": "./bin.js"
   },
   "repository": {
     "type": "git",
