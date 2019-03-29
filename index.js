@@ -3,9 +3,10 @@ const exec = require('child_process').exec
 
 module.exports = (direction, cb) => {
   const coordinateMatrices = {
-    left: "0 -1 1 1 0 0 0 0 1",
-    right: "0 1 0 -1 0 1 0 0 1",
-    normal: "0 0 0 0 0 0 0 0 0"
+    left:    " 0 -1  1  1  0  0  0  0  1",
+    right:   " 0  1  0 -1  0  1  0  0  1",
+    normal:  " 1  0  0  0  1  0  0  0  1",
+    inverse: "-1  0  1  0 -1  1  0  0  1"
   }
 
   exec('xinput', (err, stdout) => {
